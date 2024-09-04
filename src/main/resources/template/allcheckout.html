@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>History Order</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+<button class="btn btn-sm btn-primary">
+    <a href="/home" style="color: white; text-decoration: none;">Home</a>
+</button>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-10">
+        <div th:if="${checkOutList != null and #lists.size(checkOutList) > 0}">
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Customer Name</th>
+                    <th>Customer Address</th>
+                    <th>Order Date</th>
+                    <th>More</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="checkout : ${checkOutList}">
+                    <td th:text="${checkout.id}"></td>
+                    <td th:text="${checkout.customerName}"></td>
+                    <td th:text="${checkout.customerAddress}"></td>
+                    <td th:text="${checkout.orderDate}"></td>
+                    <td>
+                        <form th:action="@{/orderdetail/{id}(id=${checkout.id})}" method="post">
+                            <button type="submit" class="btn btn-primary">Show Details</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${checkOutList == null or #lists.size(checkOutList) == 0}">
+            <br>
+            <div class="alert alert-warning">
+                There is no data
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
